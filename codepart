@@ -1,0 +1,25 @@
+#A SageMath code to get the eigenvlaues of the Sunflower hypergraph SH(n,h,p)
+def SiedelSunflowerMat(n,h,p):
+    k=(n-h)/p+1
+    q=graphs.CompleteGraph(p)
+    P=q.am()
+    A=graphs.CompleteGraph(h)
+    H=A.am()
+    x=n-h
+    J=ones_matrix(x,h-p)
+    Ze=zero_matrix(ZZ,(k-1)*p,p)
+    X1=block_matrix([J,Ze],nrows=1)
+    N=block_matrix([[X1],[H]])
+    N1=X1.transpose()
+    Y1=[]
+    for i in list(range(k-1)):
+        Y1.append(P)
+    Y=block_diagonal_matrix(Y1)
+    Z=block_matrix([[Y],[N1]])
+    S=block_matrix([[Z,N]])
+    J2=ones_matrix(n)
+    I2=identity_matrix(n)
+    S1=J2-I2-2*S
+    return S1
+S=SiedelSunflowerMat(17,5,3)
+S.eigenvlaues()
